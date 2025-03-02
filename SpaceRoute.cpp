@@ -35,9 +35,7 @@ private:
 
 
 public:
-    template <typename T>
     SpaceRoute(); // Constructor
-    SpaceRoute();
     ~SpaceRoute(); // Destructor
 
     void addWaypointAtBeginning(T& data);
@@ -185,6 +183,100 @@ void SpaceRoute<T>::removeWaypointAtEnd() {
     delete temp;
     // while temp is not used, it acts as temporary memory management
 }
+
+template<typename T>
+void SpaceRoute<T>::removeWaypointAtIndex(int index) {
+    if (!head) {
+        // if list is empty
+        return;
+    }
+    if (index < 0) {
+        // if list is invalid
+        return;
+    }
+    if (index==0) {
+        removeWaypointAtBeginning();
+    }
+
+    Node<T>* current = head;
+    int count = 0;
+    while (current && count < index) {
+        // searches for node
+        current = current->next;
+        count++;
+    }
+    if (!current) {
+        // if node cannot be found
+        return;
+    }
+    if (current == tail) {
+        // if current is the last node
+        removeWaypointAtEnd();
+    }
+
+    // connects nodes before deleting
+    current->prev->next = current->next;
+    current->next->prev = current->prev;
+    delete current;
+}
+
+template<typename T>
+void SpaceRoute<T>::traverseForward() {
+    Node<T>* current = head;
+    while (current) {
+        cout << current->data << " ";
+        current = current->next;
+    }
+    cout << endl;
+}
+
+template<typename T>
+void SpaceRoute<T>::traverseBackward() {
+    Node<T>* current = tail;
+    while (current) {
+        cout << current->data << " ";
+        current = current->prev;
+    }
+    cout << endl;
+}
+
+template<typename T>
+Node<T> *SpaceRoute<T>::getWaypoint(int index) {
+    if (!head) {
+        // if list is empty
+        return nullptr;
+    }
+    if (index < 0) {
+        // if index is invalid
+        return nullptr;
+    }
+    Node<T>* current = head;
+    int count = 0;
+    // finds node in index
+    while (current && count < index) {
+        current = current->next;
+        count++;
+    }
+    // if out of bounds, will return a nullptr instead
+    return current;
+}
+
+template<typename T>
+void SpaceRoute<T>::setWaypoint(int index, T &data) {
+    // creates new node using the previous method
+    Node<T>* newNode = getWaypoint(index);
+    // if newNode is valid, it will set the new node
+    if (newNode) {
+        newNode->data = data;
+    }
+}
+
+
+
+
+
+
+
 
 
 
