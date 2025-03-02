@@ -168,7 +168,7 @@ void SpaceRoute<T>::removeWaypointAtBeginning() {
 template<typename T>
 void SpaceRoute<T>::removeWaypointAtEnd() {
     if (!tail) {
-        // if list is emptu
+        // if list is empty
         return;
     }
     Node<T>* temp = tail;
@@ -270,13 +270,3 @@ void SpaceRoute<T>::setWaypoint(int index, T &data) {
         newNode->data = data;
     }
 }
-
-
-
-
-
-
-
-
-
-
