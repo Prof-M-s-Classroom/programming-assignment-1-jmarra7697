@@ -33,8 +33,12 @@ private:
     Node<T>* head;
     Node<T>* tail;
 
+
+
 public:
-    SpaceRoute();  // Constructor
+    template <typename T>
+    SpaceRoute(); // Constructor
+    SpaceRoute();
     ~SpaceRoute(); // Destructor
 
     void addWaypointAtBeginning(T& data);
@@ -58,4 +62,61 @@ public:
         }
 
 };
+
+template <typename T>
+SpaceRoute<T>::SpaceRoute() {
+    head = nullptr;
+    tail = nullptr;
+}
+
+template <typename T>
+SpaceRoute<T>::~SpaceRoute() {
+    while (head != nullptr) {
+        Node<T>* current = head;
+        head = head->next;
+        delete current;
+    }
+    tail = nullptr;
+}
+
+template<typename T>
+void SpaceRoute<T>::addWaypointAtBeginning(T &data) {
+    Node<T>* newNode = new Node<T>(data);
+    if (head == nullptr) {
+        // if list is empty
+        head = newNode;
+        tail = newNode;
+    } else {
+        //if list is not empty
+        newNode->next = head;
+        head->prev = newNode;
+        head = newNode;
+    }
+}
+
+template<typename T>
+void SpaceRoute<T>::addWaypointAtEnd(T &data) {
+    Node<T>* newNode = new Node<T>(data);
+    if (head == nullptr) {
+        // if list is empty
+        head = newNode;
+        tail = newNode;
+    } else {
+        // if list is not empty
+        tail->next = newNode;
+        newNode->prev = tail;
+        tail = newNode;
+    }
+}
+
+template<typename T>
+void SpaceRoute<T>::addWaypointAtIndex(int index, T &data) {
+    if (index == 0) {
+        // checks if index is at zero, if so, uses previously defined method and ends
+        addWaypointAtBeginning(data);
+        return;
+    }
+
+}
+
 
